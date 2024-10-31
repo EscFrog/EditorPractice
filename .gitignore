@@ -38,6 +38,7 @@ _.svd
 _.pdb
 _.opendb
 \*.VC.db
+.vs/
 
 # Unity3D generated file on crash reports
 
