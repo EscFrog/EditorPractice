@@ -37,7 +37,7 @@ public class TestCollision : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 1000.0f, mask))
             {
-                Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
+                Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}! Tag is {hit.collider.gameObject.tag}");
             }
         }
 
