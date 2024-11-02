@@ -6,7 +6,10 @@ using UnityEngine;
 public class Managers : MonoBehaviour
 {
     static Managers s_instance;   // 유일성이 보장된다
-    public static Managers Inatance { get { init(); return s_instance; } } // 유일한 매니저를 갖고온다
+    static Managers Instance { get { init(); return s_instance; } } // 유일한 매니저를 갖고온다
+
+    InputManager _input = new InputManager();
+    public static InputManager Input { get { return Instance._input; } }
 
     void Start()
     {
@@ -15,7 +18,7 @@ public class Managers : MonoBehaviour
 
     void Update()
     {
-        
+        _input.OnUpdate();
     }
 
     static void init()
@@ -23,15 +26,15 @@ public class Managers : MonoBehaviour
         if (s_instance == null)
         {
             // 초기화
-            GameObject go = GameObject.Find("@Managers");
-            if (go == null)
+            GameObject managerObj = GameObject.Find("@Managers");
+            if (managerObj == null)
             {
-                go = new GameObject { name = "@Managers" };
-                go.AddComponent<Managers>();
+                managerObj = new GameObject { name = "@Managers" };
+                managerObj.AddComponent<Managers>();
             }
 
-            DontDestroyOnLoad(go);
-            s_instance = go.GetComponent<Managers>();
+            DontDestroyOnLoad(managerObj);
+            s_instance = managerObj.GetComponent<Managers>();
         }
     }
 }
