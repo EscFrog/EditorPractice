@@ -27,17 +27,32 @@ public class TestCollision : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-            Vector3 dir = mousePos - Camera.main.transform.position;
-            dir = dir.normalized;
+            Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
 
-            Debug.DrawRay(Camera.main.transform.position, dir * 1000.0f, Color.red, 1.0f);
+            Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000.0f, Color.red, 1.0f);
 
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, dir, out hit, 1000.0f))
+
+
+            if (Physics.Raycast(ray, out hit, 1000.0f))
             {
                 Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
             }
         }
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+        //    Vector3 dir = mousePos - Camera.main.transform.position;
+        //    dir = dir.normalized;
+
+        //    Debug.DrawRay(Camera.main.transform.position, dir * 1000.0f, Color.red, 1.0f);
+
+        //    RaycastHit hit;
+        //    if (Physics.Raycast(Camera.main.transform.position, dir, out hit, 1000.0f))
+        //    {
+        //        Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
+        //    }
+        //}
     }
 }
