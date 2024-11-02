@@ -31,10 +31,10 @@ public class TestCollision : MonoBehaviour
 
             Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000.0f, Color.red, 1.0f);
 
+            int mask = (1 << 6) | (1 << 7);    // 비트 쉬프트를 이용한 비트 플래그. 6번 인덱스 레이어랑 7번 레이어
+            
             RaycastHit hit;
-
-
-            if (Physics.Raycast(ray, out hit, 1000.0f))
+            if (Physics.Raycast(ray, out hit, 1000.0f, mask))
             {
                 Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
             }
