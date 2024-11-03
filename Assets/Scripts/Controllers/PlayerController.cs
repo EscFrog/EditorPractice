@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 _destPos;
 
-    float wait_run_ratio = 0;
+    Animator _anim;
 
     public enum PlayerState
     {
@@ -44,25 +44,21 @@ public class PlayerController : MonoBehaviour
         }
 
         // 局聪皋捞记 贸府
-        wait_run_ratio = Mathf.Lerp(wait_run_ratio, 1, 10.0f * Time.deltaTime);
-        Animator anim = GetComponent<Animator>();
-        anim.SetFloat("wait_run_ratio", wait_run_ratio);
-        anim.Play("WAIT_RUN");
+        _anim.SetBool("isRunning", true);
     }
 
     void UpdateIdel()
     {
         // 局聪皋捞记 贸府
-        wait_run_ratio = Mathf.Lerp(wait_run_ratio, 0, 10.0f * Time.deltaTime);
-        Animator anim = GetComponent<Animator>();
-        anim.SetFloat("wait_run_ratio", wait_run_ratio);
-        anim.Play("WAIT_RUN");
+        _anim.SetBool("isRunning", false);
     }
 
     void Start()
     {
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
+
+        _anim = GetComponent<Animator>();
     }
 
     void Update()
