@@ -280,6 +280,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5853678739497556743, guid: b1dfdb730f0857842a9e659d7cb62bfa, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f06099352d8919e4fbe9d86ce25bb2ca, type: 2}
     - target: {fileID: 5853678739507079553, guid: b1dfdb730f0857842a9e659d7cb62bfa, type: 3}
       propertyPath: m_Name
       value: UnityChan
