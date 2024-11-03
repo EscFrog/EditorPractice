@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdateDie()
     { 
-        // ¾Æ¹«°Íµµ ¸øÇÔ
+        // ì•„ë¬´ê²ƒë„ ëª»í•¨
     }
 
     void UpdateMoving()
@@ -43,13 +43,13 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotateSpeed);
         }
 
-        // ¾Ö´Ï¸ŞÀÌ¼Ç Ã³¸®
+        // ì• ë‹ˆë©”ì´ì…˜ ì²˜ë¦¬
         _anim.SetBool("isRunning", true);
     }
 
     void UpdateIdel()
     {
-        // ¾Ö´Ï¸ŞÀÌ¼Ç Ã³¸®
+        // ì• ë‹ˆë©”ì´ì…˜ ì²˜ë¦¬
         _anim.SetBool("isRunning", false);
     }
 

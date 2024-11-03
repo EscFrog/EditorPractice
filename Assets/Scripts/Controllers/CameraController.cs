@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
                 targetDistance = (hit.point - _player.transform.position).magnitude * 0.8f;
             }
 
-            // zÃà °Å¸®¸¸ ºÎµå·´°Ô ÀÌµ¿
+            // zì¶• ê±°ë¦¬ë§Œ ë¶€ë“œëŸ½ê²Œ ì´ë™
             float currentDistance = Vector3.Distance(transform.position, _playerCenter);
             float smoothedDistance = Mathf.Lerp(currentDistance, targetDistance, Time.deltaTime * 10.0f);
 
