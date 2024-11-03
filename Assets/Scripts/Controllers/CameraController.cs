@@ -25,7 +25,6 @@ public class CameraController : MonoBehaviour
         if (_mode == Define.CameraMode.QuarterView)
         {
             _playerCenter = _player.transform.position + new Vector3(0.0f, 0.8f, 0.0f);
-            Debug.DrawRay(_playerCenter, _delta);
             
             if (Physics.Raycast(_playerCenter, _delta, out RaycastHit hit, _delta.magnitude, LayerMask.GetMask("Wall")))
             {
