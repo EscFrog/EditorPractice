@@ -98,12 +98,4 @@ public class PlayerController : MonoBehaviour
             _state = PlayerState.Moving;
         }
     }
-
-    void OnFootEvent(int whichFoot)
-    {
-        if (whichFoot == 0)
-            Debug.Log("왼발 뚜벅");
-        else
-            Debug.Log("오른발 뚜벅");
-    }
 }
