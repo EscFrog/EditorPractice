@@ -284,6 +284,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnityChan
       objectReference: {fileID: 0}
+    - target: {fileID: 5853678739507079553, guid: b1dfdb730f0857842a9e659d7cb62bfa, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5853678739507180961, guid: b1dfdb730f0857842a9e659d7cb62bfa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -770,7 +774,7 @@ GameObject:
   - component: {fileID: 2136261174}
   - component: {fileID: 2136261173}
   - component: {fileID: 2136261172}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

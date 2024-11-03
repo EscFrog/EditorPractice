@@ -13,25 +13,29 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     GameObject _player = null;
 
+    Vector3 _playerCenter;
+
     void Start()
     {
-        
+
     }
 
     void LateUpdate()
     {
         if (_mode == Define.CameraMode.QuarterView)
         {
-            Debug.DrawRay(_player.transform.position, _delta);
-            if (Physics.Raycast(_player.transform.position, _delta, out RaycastHit hit, _delta.magnitude, LayerMask.GetMask("Wall")))
+            _playerCenter = _player.transform.position + new Vector3(0.0f, 0.8f, 0.0f);
+            Debug.DrawRay(_playerCenter, _delta);
+            
+            if (Physics.Raycast(_playerCenter, _delta, out RaycastHit hit, _delta.magnitude, LayerMask.GetMask("Wall")))
             {
                 float dist = (hit.point - _player.transform.position).magnitude * 0.8f;
-                transform.position = _player.transform.position + _delta.normalized * dist;
+                transform.position = _playerCenter + _delta.normalized * dist;
             }
             else
             {
-                transform.position = _player.transform.position + _delta;
-                transform.LookAt(_player.transform);
+                transform.position = _playerCenter + _delta;
+                transform.LookAt(_playerCenter + new Vector3(0.0f, 0.8f, 0.0f));
             }
         }
     }
