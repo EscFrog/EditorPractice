@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     PlayerState _state = PlayerState.Idle;
 
     void UpdateDie()
-    { 
+    {
         // 아무것도 못함
     }
 
@@ -40,7 +40,11 @@ public class PlayerController : MonoBehaviour
             float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
             transform.position += dir.normalized * moveDist;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotateSpeed);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(dir),
+                _rotateSpeed
+            );
         }
 
         // 애니메이션 처리
@@ -93,5 +97,13 @@ public class PlayerController : MonoBehaviour
             _destPos = hit.point;
             _state = PlayerState.Moving;
         }
+    }
+
+    void OnFootEvent(int whichFoot)
+    {
+        if (whichFoot == 0)
+            Debug.Log("왼발 뚜벅");
+        else
+            Debug.Log("오른발 뚜벅");
     }
 }
