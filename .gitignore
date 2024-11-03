@@ -19,7 +19,8 @@ UserSettings/
 
 # Uncomment this line if you have a custom assembly file in your Assets directory.
 
-# \*.csproj
+\*.csproj
+\*.sln
 
 # \*.unityproj
 
@@ -39,6 +40,7 @@ _.pdb
 _.opendb
 \*.VC.db
 .vs/
+.vscode/
 
 # Unity3D generated file on crash reports
 
