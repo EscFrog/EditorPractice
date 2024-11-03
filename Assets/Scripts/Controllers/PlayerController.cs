@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000.0f, Color.red, 1.0f);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, LayerMask.GetMask("Wall")))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, LayerMask.GetMask("Floor")))
         {
             _destPos = hit.point;
             _moveToDest = true;
