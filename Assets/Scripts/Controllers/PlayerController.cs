@@ -10,82 +10,75 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float _rotateSpeed = 0.1f;
 
-    bool _moveToDest = false;
     Vector3 _destPos;
 
+    float wait_run_ratio = 0;
 
-    void Start()
+    public enum PlayerState
     {
-        Managers.Input.KeyAction -= OnKeyboardPress;
-        Managers.Input.KeyAction += OnKeyboardPress;
-        Managers.Input.MouseAction -= OnMouseClicked;
-        Managers.Input.MouseAction += OnMouseClicked;
-
+        Die,
+        Moving,
+        Idle,
     }
 
-    float wait_run_ratio = 0;
-    void Update()
+    PlayerState _state = PlayerState.Idle;
+
+    void UpdateDie()
+    { 
+        // 酒公巴档 给窃
+    }
+
+    void UpdateMoving()
     {
-        if (_moveToDest)
+        Vector3 dir = _destPos - transform.position;
+        if (dir.magnitude < 0.0001f)
         {
-            Vector3 dir = _destPos - transform.position;
-            if (dir.magnitude < 0.0001f)
-            {
-                _moveToDest = false;
-            }
-            else
-            {
-                float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
-                transform.position += dir.normalized * moveDist;
-
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotateSpeed);
-            }
-        }
-
-        if (_moveToDest)
-        {
-            wait_run_ratio = Mathf.Lerp(wait_run_ratio, 1, 10.0f * Time.deltaTime);
-            Animator anim = GetComponent<Animator>();
-            anim.SetFloat("wait_run_ratio", wait_run_ratio);
-            anim.Play("WAIT_RUN");
+            _state = PlayerState.Idle;
         }
         else
         {
-            wait_run_ratio = Mathf.Lerp(wait_run_ratio, 0, 10.0f * Time.deltaTime);
-            Animator anim = GetComponent<Animator>();
-            anim.SetFloat("wait_run_ratio", wait_run_ratio);
-            anim.Play("WAIT_RUN");
+            float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
+            transform.position += dir.normalized * moveDist;
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotateSpeed);
         }
+
+        // 局聪皋捞记 贸府
+        wait_run_ratio = Mathf.Lerp(wait_run_ratio, 1, 10.0f * Time.deltaTime);
+        Animator anim = GetComponent<Animator>();
+        anim.SetFloat("wait_run_ratio", wait_run_ratio);
+        anim.Play("WAIT_RUN");
     }
 
-    void OnKeyboardPress()
+    void UpdateIdel()
     {
-        if (Input.GetKey(KeyCode.W))
+        // 局聪皋捞记 贸府
+        wait_run_ratio = Mathf.Lerp(wait_run_ratio, 0, 10.0f * Time.deltaTime);
+        Animator anim = GetComponent<Animator>();
+        anim.SetFloat("wait_run_ratio", wait_run_ratio);
+        anim.Play("WAIT_RUN");
+    }
+
+    void Start()
+    {
+        Managers.Input.MouseAction -= OnMouseClicked;
+        Managers.Input.MouseAction += OnMouseClicked;
+    }
+
+    void Update()
+    {
+        switch (_state)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), _rotateSpeed);
-            transform.position += Vector3.forward * Time.deltaTime * _speed;
-
+            case PlayerState.Die:
+                UpdateDie();
+                break;
+            case PlayerState.Moving:
+                UpdateMoving();
+                break;
+            case PlayerState.Idle:
+                UpdateIdel();
+                break;
         }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), _rotateSpeed);
-            transform.position += Vector3.back * Time.deltaTime * _speed;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), _rotateSpeed);
-            transform.position += Vector3.left * Time.deltaTime * _speed;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), _rotateSpeed);
-            transform.position += Vector3.right * Time.deltaTime * _speed;
-        }
-
-        _moveToDest = false;
     }
 
     void OnMouseClicked(Define.MouseEvent evt)
@@ -93,14 +86,16 @@ public class PlayerController : MonoBehaviour
         //if (evt != Define.MouseEvent.Click)
         //    return;
 
+        if (_state == PlayerState.Die)
+            return;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000.0f, Color.red, 0.3f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, LayerMask.GetMask("Floor")))
         {
             _destPos = hit.point;
-            _moveToDest = true;
-            //Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}! Tag is {hit.collider.gameObject.tag}");
+            _state = PlayerState.Moving;
         }
     }
 }
