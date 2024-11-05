@@ -14,6 +14,16 @@ public class PlayerController : MonoBehaviour
 
     Animator _anim;
 
+    void Start()
+    {
+        Managers.Input.MouseAction -= OnMouseClicked;
+        Managers.Input.MouseAction += OnMouseClicked;
+
+        Managers.Resource.Instantiate("UI/UI_Button");
+
+        _anim = GetComponent<Animator>();
+    }
+
     public enum PlayerState
     {
         Die,
@@ -55,14 +65,6 @@ public class PlayerController : MonoBehaviour
     {
         // 애니메이션 처리
         _anim.SetBool("isRunning", false);
-    }
-
-    void Start()
-    {
-        Managers.Input.MouseAction -= OnMouseClicked;
-        Managers.Input.MouseAction += OnMouseClicked;
-
-        _anim = GetComponent<Animator>();
     }
 
     void Update()
