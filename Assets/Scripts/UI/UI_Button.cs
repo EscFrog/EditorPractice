@@ -40,12 +40,14 @@ public class UI_Button : UI_Base
         GetText((int)Texts.ScoreText).text = "Bind Test";
 
         GameObject go = GetImage((int)Images.ItemIcon).gameObject;
-        UI_EventHandler evt = go.GetComponent<UI_EventHandler>();
-        evt.OnDragHandler += (
+
+        AddUIEvent(
+            go,
             (PointerEventData data) =>
             {
-                evt.gameObject.transform.position = data.position;
-            }
+                go.transform.position = data.position;
+            },
+            Define.UIEvent.Drag
         );
     }
 
