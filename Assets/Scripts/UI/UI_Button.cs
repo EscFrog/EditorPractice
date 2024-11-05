@@ -36,11 +36,9 @@ public class UI_Button : UI_Base
         Bind<GameObject>(typeof(GameObjects));
         Bind<Image>(typeof(Images));
 
-        // test
-        GetText((int)Texts.ScoreText).text = "Bind Test";
+        GetButton((int)Buttons.PointButton).gameObject.AddUIEvent(OnButtonClicked);
 
         GameObject go = GetImage((int)Images.ItemIcon).gameObject;
-
         AddUIEvent(
             go,
             (PointerEventData data) =>
@@ -53,8 +51,9 @@ public class UI_Button : UI_Base
 
     int _score = 0;
 
-    public void OnButtonClicked()
+    public void OnButtonClicked(PointerEventData data)
     {
         _score++;
+        GetText((int)Texts.ScoreText).text = $"점수 : {_score}";
     }
 }
