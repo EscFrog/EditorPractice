@@ -33,7 +33,7 @@ public class UI_Button : MonoBehaviour
         Bind<GameObject>(typeof(GameObjects));
 
         // test
-        Get<Text>((int)Texts.ScoreText).text = "Bind Test";
+        GetText((int)Texts.ScoreText).text = "Bind Test";
     }
 
     void Bind<T>(Type type)
@@ -64,6 +64,21 @@ public class UI_Button : MonoBehaviour
             return null;
 
         return objects[idx] as T;
+    }
+
+    Text GetText(int idx)
+    {
+        return Get<Text>(idx);
+    }
+
+    Button GetButton(int idx)
+    {
+        return Get<Button>(idx);
+    }
+
+    Image GetImage(int idx)
+    {
+        return Get<Image>(idx);
     }
 
     int _score = 0;
