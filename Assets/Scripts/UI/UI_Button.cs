@@ -25,6 +25,9 @@ public class UI_Button : MonoBehaviour
     {
         Bind<Button>(typeof(Buttons));
         Bind<Text>(typeof(Texts));
+
+        // test
+        Get<Text>((int)Texts.ScoreText).text = "Bind Test";
     }
 
     void Bind<T>(Type type)
@@ -39,6 +42,16 @@ public class UI_Button : MonoBehaviour
         {
             objects[i] = Utils.FindChild<T>(gameObject, names[i], true);
         }
+    }
+
+    T Get<T>(int idx)
+        where T : UnityEngine.Object
+    {
+        UnityEngine.Object[] objects = null;
+        if (_objectsDict.TryGetValue(typeof(T), out objects) == false)
+            return null;
+
+        return objects[idx] as T;
     }
 
     int _score = 0;
