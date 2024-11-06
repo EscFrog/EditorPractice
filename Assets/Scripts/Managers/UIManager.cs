@@ -22,15 +22,36 @@ public class UIManager
         return popup;
     }
 
-    public void ClosePopupUI()
+    void ClosePopupUI()
     {
         if (_popupStack.Count == 0)
             return;
 
         UI_Popup popup = _popupStack.Pop();
+        // Debug.Log($"Close Popup: {popup.name}");
         Managers.Resource.Destroy(popup.gameObject);
         popup = null;
 
         _order--;
+    }
+
+    public void ClosePopupUI(UI_Popup popup)
+    {
+        if (_popupStack.Count == 0)
+            return;
+
+        if (_popupStack.Peek() != popup)
+        {
+            Debug.Log("Close Popup Failed");
+            return;
+        }
+
+        ClosePopupUI();
+    }
+
+    public void CloseAllPopupUI()
+    {
+        while (_popupStack.Count > 0)
+            ClosePopupUI();
     }
 }
