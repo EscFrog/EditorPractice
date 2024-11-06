@@ -4,9 +4,27 @@ using UnityEngine;
 
 public class UIManager
 {
-    int _order = 0;
+    int _order = 10;
 
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+
+    // 팝업끼리 오더 관리
+    public void SetCanvas(GameObject go, bool sort = true)
+    {
+        Canvas canvas = Utils.GetOrAddComponent<Canvas>(go);
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
+
+        if (sort)
+        {
+            canvas.sortingOrder = (_order);
+            _order++;
+        }
+        else
+        {
+            canvas.sortingOrder = 0;
+        }
+    }
 
     public T ShowPopupUI<T>(string name = null)
         where T : UI_Popup
