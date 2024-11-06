@@ -37,6 +37,12 @@ public class UIManager
         T popup = Utils.GetOrAddComponent<T>(go);
         _popupStack.Push(popup);
 
+        GameObject root = GameObject.Find("@UI_Root");
+        if (root == null)
+            root = new GameObject { name = "@UI_Root" };
+
+        go.transform.SetParent(root.transform);
+
         return popup;
     }
 
