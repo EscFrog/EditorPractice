@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ResourceManager
 {
-    public T Load<T>(string path) where T : Object
+    public T Load<T>(string path)
+        where T : Object
     {
         return Resources.Load<T>(path);
     }
@@ -21,11 +22,11 @@ public class ResourceManager
         return Object.Instantiate(prefab, parent);
     }
 
-    public void Destroy(GameObject prefab)
+    public void Destroy(GameObject go)
     {
-        if (prefab != null)
+        if (go == null)
             return;
 
-        Object.Destroy(prefab);
+        Object.Destroy(go);
     }
 }

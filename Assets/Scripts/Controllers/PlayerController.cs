@@ -16,12 +16,15 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _anim = GetComponent<Animator>();
+
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
 
+        // Test
         // Managers.Resource.Instantiate("UI/UI_Button");
-
-        _anim = GetComponent<Animator>();
+        Managers.UI.ShowPopupUI<UI_Button>();
+        Managers.UI.ClosePopupUI();
     }
 
     public enum PlayerState
