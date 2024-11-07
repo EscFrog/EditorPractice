@@ -7,6 +7,18 @@ public class UIManager
     int _order = 10;
 
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+    UI_Scene _sceneUI = null;
+
+    public GameObject Root // 프로퍼티
+    {
+        get
+        {
+            GameObject root = GameObject.Find("@UI_Root");
+            if (root == null)
+                root = new GameObject { name = "@UI_Root" };
+            return root;
+        }
+    }
 
     // 팝업끼리 오더 관리
     public void SetCanvas(GameObject go, bool sort = true)
@@ -26,6 +38,22 @@ public class UIManager
         }
     }
 
+    public T ShowSceneUI<T>(string name = null)
+        where T : UI_Scene
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");
+
+        T sceneUI = Utils.GetOrAddComponent<T>(go);
+        _sceneUI = sceneUI;
+
+        go.transform.SetParent(Root.transform);
+
+        return sceneUI;
+    }
+
     public T ShowPopupUI<T>(string name = null)
         where T : UI_Popup
     {
@@ -41,7 +69,7 @@ public class UIManager
         if (root == null)
             root = new GameObject { name = "@UI_Root" };
 
-        go.transform.SetParent(root.transform);
+        go.transform.SetParent(Root.transform);
 
         return popup;
     }

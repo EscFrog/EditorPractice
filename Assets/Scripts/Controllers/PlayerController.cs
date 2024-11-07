@@ -23,11 +23,9 @@ public class PlayerController : MonoBehaviour
 
         // Test
         // Managers.Resource.Instantiate("UI/UI_Button");
-        for (int i = 0; i < 8; i++)
-        {
-            UI_Button ui = Managers.UI.ShowPopupUI<UI_Button>();
-        }
-        // Managers.UI.ClosePopupUI(ui);
+
+        UI_Button ui = Managers.UI.ShowPopupUI<UI_Button>();
+        Managers.UI.ClosePopupUI(ui);
     }
 
     public enum PlayerState
