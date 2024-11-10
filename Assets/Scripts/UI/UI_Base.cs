@@ -5,10 +5,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Base : MonoBehaviour
+public abstract class UI_Base : MonoBehaviour
 {
     protected Dictionary<Type, UnityEngine.Object[]> _objectsDict =
         new Dictionary<Type, UnityEngine.Object[]>(); // 타입별로 오브젝트 리스트가 매치되는 딕셔너리
+
+    public abstract void Init();
 
     protected void Bind<T>(Type type)
         where T : UnityEngine.Object
