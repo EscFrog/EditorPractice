@@ -27,10 +27,10 @@ public class UI_Inven : UI_Scene
         // 임시로 8개를 생성하자
         for (int i = 0; i < 8; i++)
         {
-            GameObject item = Managers.Resource.Instantiate("UI/Scene/UI_Inven_Item");
-            item.transform.SetParent(gridPanel.transform);
-
-            UI_Inven_Item invenItem = Utils.GetOrAddComponent<UI_Inven_Item>(item);
+            GameObject item = Managers
+                .UI.MakeSubItem<UI_Inven_Item>(parent: gridPanel.transform)
+                .gameObject;
+            UI_Inven_Item invenItem = item.GetOrAddComponent<UI_Inven_Item>();
             invenItem.SetInfo($"아이템{i + 1}번");
         }
     }

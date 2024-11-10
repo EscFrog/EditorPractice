@@ -42,6 +42,11 @@ public abstract class UI_Base : MonoBehaviour
         return objects[idx] as T;
     }
 
+    protected GameObject GetObject(int idx)
+    {
+        return Get<GameObject>(idx);
+    }
+
     protected Text GetText(int idx)
     {
         return Get<Text>(idx);
@@ -57,7 +62,7 @@ public abstract class UI_Base : MonoBehaviour
         return Get<Image>(idx);
     }
 
-    public static void AddUIEvent(
+    public static void BindEvent(
         GameObject go,
         Action<PointerEventData> action,
         Define.UIEvent type = Define.UIEvent.Click
