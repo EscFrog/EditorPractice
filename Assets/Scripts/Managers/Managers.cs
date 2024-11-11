@@ -66,6 +66,8 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(managerObj);
             s_instance = managerObj.GetComponent<Managers>();
+
+            s_instance._sound.Init();
         }
     }
 }
