@@ -178,6 +178,14 @@ CapsuleCollider:
   m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!81 &455525819
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455525810}
+  m_Enabled: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +350,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5853678739507079553, guid: b1dfdb730f0857842a9e659d7cb62bfa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 455525815}
+    - targetCorrespondingSourceObject: {fileID: 5853678739507079553, guid: b1dfdb730f0857842a9e659d7cb62bfa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 455525819}
   m_SourcePrefab: {fileID: 100100000, guid: b1dfdb730f0857842a9e659d7cb62bfa, type: 3}
 --- !u!1 &1036228051
 GameObject:
@@ -461,10 +472,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -905,6 +916,10 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 455525810}
+    - target: {fileID: 6063541025593047910, guid: 3016d5035f9520a47847b61d251a90a0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
