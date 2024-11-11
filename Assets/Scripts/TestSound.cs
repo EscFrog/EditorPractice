@@ -18,12 +18,6 @@ public class TestSound : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        // AudioSource audio = GetComponent<AudioSource>();
-        // audio.PlayOneShot(audioClip);
-        // audio.PlayOneShot(audioClip2);
-        // float lifeTime = Mathf.Max(audioClip.length, audioClip2.length);
-        // GameObject.Destroy(gameObject, lifeTime);
-
         if (swicher)
         {
             Managers.Sound.Play("UnityChan/univ0001", Define.Sound.Bgm);
@@ -34,7 +28,5 @@ public class TestSound : MonoBehaviour
             Managers.Sound.Play("UnityChan/univ0002", Define.Sound.Bgm);
             swicher = true;
         }
-
-        // GameObject.Destroy(gameObject, 0.25f);
     }
 }
