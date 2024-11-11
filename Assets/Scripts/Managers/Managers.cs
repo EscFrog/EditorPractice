@@ -16,6 +16,7 @@ public class Managers : MonoBehaviour
     } // 유일한 매니저를 갖고온다
 
     InputManager _input = new InputManager();
+    PoolManager _pool = new PoolManager();
     ResourceManager _resource = new ResourceManager();
     SceneManagerEX _scene = new SceneManagerEX();
     SoundManager _sound = new SoundManager();
@@ -24,6 +25,10 @@ public class Managers : MonoBehaviour
     public static InputManager Input
     {
         get { return Instance._input; }
+    }
+    public static PoolManager Pool
+    {
+        get { return Instance._pool; }
     }
     public static ResourceManager Resource
     {
