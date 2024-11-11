@@ -22,8 +22,8 @@ public class TestSound : MonoBehaviour
         // float lifeTime = Mathf.Max(audioClip.length, audioClip2.length);
         // GameObject.Destroy(gameObject, lifeTime);
 
-        Managers.Sound.Play(Define.Sound.Effect, "UnityChan/univ0001");
-        Managers.Sound.Play(Define.Sound.Effect, "UnityChan/univ0002");
+        Managers.Sound.Play("UnityChan/univ0001");
+        Managers.Sound.Play("UnityChan/univ0002");
 
         // GameObject.Destroy(gameObject, 0.25f);
     }

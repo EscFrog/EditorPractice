@@ -26,7 +26,7 @@ public class SoundManager
         }
     }
 
-    public void Play(Define.Sound type, string path, float pitch = 1.0f)
+    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
     {
         if (path.Contains("Sounds/") == false)
             path = $"Sounds/{path}";
