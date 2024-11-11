@@ -27,6 +27,16 @@ public class SoundManager
         }
     }
 
+    public void Clear()
+    {
+        foreach (AudioSource audioSource in _audioSources)
+        {
+            audioSource.clip = null;
+            audioSource.Stop();
+        }
+        _audioClips.Clear();
+    }
+
     public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
     {
         if (path.Contains("Sounds/") == false)
