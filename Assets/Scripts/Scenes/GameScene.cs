@@ -13,5 +13,8 @@ public class GameScene : BaseScene
         Managers.UI.ShowSceneUI<UI_Inven>();
     }
 
-    public override void Clear() { }
+    public override void Clear()
+    {
+        Debug.Log("Game Scene Clear");
+    }
 }
