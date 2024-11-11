@@ -25,6 +25,6 @@ public class TestSound : MonoBehaviour
         Managers.Sound.Play(Define.Sound.Effect, "UnityChan/univ0001");
         Managers.Sound.Play(Define.Sound.Effect, "UnityChan/univ0002");
 
-        GameObject.Destroy(gameObject, 0.25f);
+        // GameObject.Destroy(gameObject, 0.25f);
     }
 }
