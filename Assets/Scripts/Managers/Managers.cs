@@ -18,6 +18,7 @@ public class Managers : MonoBehaviour
     InputManager _input = new InputManager();
     ResourceManager _resource = new ResourceManager();
     SceneManagerEX _scene = new SceneManagerEX();
+    SoundManager _sound = new SoundManager();
     UIManager _ui = new UIManager();
 
     public static InputManager Input
@@ -31,6 +32,10 @@ public class Managers : MonoBehaviour
     public static SceneManagerEX Scene
     {
         get { return Instance._scene; }
+    }
+    public static SoundManager Sound
+    {
+        get { return Instance._sound; }
     }
     public static UIManager UI
     {
