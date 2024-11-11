@@ -20,12 +20,12 @@ public class TestSound : MonoBehaviour
     {
         if (swicher)
         {
-            Managers.Sound.Play("UnityChan/univ0001", Define.Sound.Bgm);
+            Managers.Sound.Play(audioClip, Define.Sound.Bgm);
             swicher = false;
         }
         else
         {
-            Managers.Sound.Play("UnityChan/univ0002", Define.Sound.Bgm);
+            Managers.Sound.Play(audioClip2, Define.Sound.Bgm);
             swicher = true;
         }
     }
