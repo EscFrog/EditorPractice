@@ -72,6 +72,7 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(managerObj);
             s_instance = managerObj.GetComponent<Managers>();
 
+            s_instance._pool.Init();
             s_instance._sound.Init();
         }
     }
@@ -82,5 +83,6 @@ public class Managers : MonoBehaviour
         Sound.Clear();
         Scene.Clear();
         UI.Clear();
+        Pool.Clear();
     }
 }

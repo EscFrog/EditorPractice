@@ -171,7 +171,7 @@ PrefabInstance:
       addedObject: {fileID: 4796438610737277824}
     - targetCorrespondingSourceObject: {fileID: 100326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5765492895311124985}
+      addedObject: {fileID: 9215074953540469208}
   m_SourcePrefab: {fileID: 100100000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
 --- !u!1 &5853678739507079553 stripped
 GameObject:
@@ -234,7 +234,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -242,11 +242,16 @@ CapsuleCollider:
   m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
---- !u!81 &5765492895311124985
-AudioListener:
+--- !u!114 &9215074953540469208
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5853678739507079553}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb0ef9fa0c73476caf9b7088afbcc6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
