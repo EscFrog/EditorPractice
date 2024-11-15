@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -15,6 +14,7 @@ public class Managers : MonoBehaviour
         }
     } // 유일한 매니저를 갖고온다
 
+    DataManager _data = new DataManager();
     InputManager _input = new InputManager();
     PoolManager _pool = new PoolManager();
     ResourceManager _resource = new ResourceManager();
@@ -22,6 +22,10 @@ public class Managers : MonoBehaviour
     SoundManager _sound = new SoundManager();
     UIManager _ui = new UIManager();
 
+    public static DataManager Data
+    {
+        get { return Instance._data; }
+    }
     public static InputManager Input
     {
         get { return Instance._input; }
@@ -72,6 +76,7 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(managerObj);
             s_instance = managerObj.GetComponent<Managers>();
 
+            s_instance._data.Init();
             s_instance._pool.Init();
             s_instance._sound.Init();
         }
