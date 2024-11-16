@@ -7,7 +7,7 @@ using UnityEngine;
 public class Stat
 {
     public int level;
-    public int hp;
+    public int HP;
     public int attack;
 }
 
@@ -19,9 +19,14 @@ public class StatData
 
 public class DataManager
 {
+    public Dictionary<int, Stat> StatDict { get; private set; } = new Dictionary<int, Stat>();
+
     public void Init()
     {
         TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
         StatData data = JsonUtility.FromJson<StatData>(textAsset.text);
+
+        foreach (Stat stat in data.stats)
+            StatDict.Add(stat.level, stat);
     }
 }
