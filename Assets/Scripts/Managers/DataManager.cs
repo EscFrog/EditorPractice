@@ -3,30 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class Stat
-{
-    public int level;
-    public int HP;
-    public int attack;
-}
-
-[Serializable]
-public class StatData
-{
-    public List<Stat> stats = new List<Stat>();
-}
-
 public class DataManager
 {
     public Dictionary<int, Stat> StatDict { get; private set; } = new Dictionary<int, Stat>();
 
     public void Init()
     {
-        TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
-        StatData data = JsonUtility.FromJson<StatData>(textAsset.text);
+        StatDict = LoadJson<StatData, int, Stat>("StatData").MakeDict();
+    }
 
-        foreach (Stat stat in data.stats)
-            StatDict.Add(stat.level, stat);
+    T LoadJson<T, key, Value>(string path)
+        where T : ILoader<key, Value>
+    {
+        TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
+        return JsonUtility.FromJson<T>(textAsset.text);
     }
 }
