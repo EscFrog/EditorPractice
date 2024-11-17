@@ -1,27 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    float _speed = 10.0f;
-
-    [SerializeField]
-    float _rotateSpeed = 0.1f;
-
-    Vector3 _destPos;
-
-    Animator _anim;
-
-    void Start()
-    {
-        _anim = GetComponent<Animator>();
-
-        Managers.Input.MouseAction -= OnMouseClicked;
-        Managers.Input.MouseAction += OnMouseClicked;
-    }
-
     public enum PlayerState
     {
         Die,
@@ -29,40 +12,23 @@ public class PlayerController : MonoBehaviour
         Idle,
     }
 
+    [SerializeField]
+    float _speed = 10.0f;
+
+    [SerializeField]
+    float _rotateSpeed = 0.1f;
+
+    Vector3 _destPos;
+    Animator _anim;
+
     PlayerState _state = PlayerState.Idle;
 
-    void UpdateDie()
+    void Start()
     {
-        // 아무것도 못함
-    }
+        _anim = GetComponent<Animator>();
 
-    void UpdateMoving()
-    {
-        Vector3 dir = _destPos - transform.position;
-        if (dir.magnitude < 0.0001f)
-        {
-            _state = PlayerState.Idle;
-        }
-        else
-        {
-            float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
-            transform.position += dir.normalized * moveDist;
-
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                Quaternion.LookRotation(dir),
-                _rotateSpeed
-            );
-        }
-
-        // 애니메이션 처리
-        _anim.SetBool("isRunning", true);
-    }
-
-    void UpdateIdel()
-    {
-        // 애니메이션 처리
-        _anim.SetBool("isRunning", false);
+        Managers.Input.MouseAction -= OnMouseClicked;
+        Managers.Input.MouseAction += OnMouseClicked;
     }
 
     void Update()
@@ -81,6 +47,51 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #region Process Update by State
+    void UpdateDie()
+    {
+        // 아무것도 못함
+    }
+
+    void UpdateMoving()
+    {
+        Vector3 dir = _destPos - transform.position;
+        if (dir.magnitude < 0.1f)
+        {
+            _state = PlayerState.Idle;
+        }
+        else
+        {
+            NavMeshAgent nma = gameObject.GetOrAddComponent<NavMeshAgent>();
+            float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
+            // nma.CalculatePath();
+            nma.Move(dir.normalized * moveDist);
+
+            Debug.DrawRay(transform.position, dir.normalized * 1.5f, Color.red);
+            if (Physics.Raycast(transform.position, dir, 1.5f, LayerMask.GetMask("Wall", "Block")))
+            {
+                _state = PlayerState.Idle;
+                return;
+            }
+
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                Quaternion.LookRotation(dir),
+                _rotateSpeed
+            );
+        }
+
+        // 애니메이션 처리
+        _anim.SetBool("isRunning", true);
+    }
+
+    void UpdateIdel()
+    {
+        // 애니메이션 처리
+        _anim.SetBool("isRunning", false);
+    }
+    #endregion
+
     void OnMouseClicked(Define.MouseEvent evt)
     {
         //if (evt != Define.MouseEvent.Click)
@@ -90,7 +101,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000.0f, Color.red, 0.3f);
+        // Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000.0f, Color.red, 0.3f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, LayerMask.GetMask("Floor")))
         {
