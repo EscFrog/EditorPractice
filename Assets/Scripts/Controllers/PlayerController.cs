@@ -120,7 +120,8 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(transform.position, dir.normalized * 1.5f, Color.red);
             if (Physics.Raycast(transform.position, dir, 1.5f, LayerMask.GetMask("Wall", "Block")))
             {
-                _state = PlayerState.Idle;
+                if (Input.GetMouseButton(0) == false)
+                    _state = PlayerState.Idle;
                 return;
             }
 
