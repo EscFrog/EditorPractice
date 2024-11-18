@@ -187,6 +187,7 @@ public class PlayerController : MonoBehaviour
                     if (raycastHit)
                     {
                         _destPos = hit.point;
+                        _destPos.y = 0;
                         State = PlayerState.Moving;
                         _stopSkill = false;
 
@@ -200,7 +201,10 @@ public class PlayerController : MonoBehaviour
             case Define.MouseEvent.Press:
                 {
                     if (_lockTarget == null && raycastHit)
+                    {
                         _destPos = hit.point;
+                        _destPos.y = 0;
+                    }
                 }
                 break;
             case Define.MouseEvent.PointerUp:
