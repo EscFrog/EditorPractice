@@ -14981,6 +14981,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DogPBR
       objectReference: {fileID: 0}
+    - target: {fileID: 5285634264198873433, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9107167138614806852, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.3977787

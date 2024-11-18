@@ -109,8 +109,8 @@ public class PlayerController : MonoBehaviour
             // nma.CalculatePath();
             nma.Move(dir.normalized * moveDist);
 
-            Debug.DrawRay(transform.position, dir.normalized * 0.5f, Color.red);
-            if (Physics.Raycast(transform.position, dir, 0.5f, LayerMask.GetMask("Wall", "Block")))
+            Debug.DrawRay(transform.position, dir.normalized * 0.8f, Color.red);
+            if (Physics.Raycast(transform.position, dir, 0.8f, LayerMask.GetMask("Wall", "Block")))
             {
                 if (Input.GetMouseButton(0) == false)
                     State = PlayerState.Idle;
@@ -127,7 +127,15 @@ public class PlayerController : MonoBehaviour
 
     void UpdateIdel() { }
 
-    void UpdateSkill() { }
+    void UpdateSkill()
+    {
+        if (_lockTarget != null)
+        {
+            Vector3 dir = _lockTarget.transform.position - transform.position;
+            Quaternion quat = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, quat, _rotateSpeed);
+        }
+    }
     #endregion
 
     void OnHitEvent()
@@ -191,7 +199,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case Define.MouseEvent.Press:
                 {
-                    if (_lockTarget != null && raycastHit)
+                    if (_lockTarget == null && raycastHit)
                         _destPos = hit.point;
                 }
                 break;
