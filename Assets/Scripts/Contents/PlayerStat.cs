@@ -30,7 +30,7 @@ public class PlayerStat : StatBase
         _maxHP = 100;
         _attack = 10;
         _defence = 5;
-        _moveSpeed = 5.0f;
+        _moveSpeed = 8.0f;
 
         _exp = 0;
         _gold = 0;
