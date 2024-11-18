@@ -10,10 +10,10 @@ public class PlayerController : MonoBehaviour
         Die,
         Moving,
         Idle,
+        Skill,
     }
 
-    [SerializeField]
-    float _speed = 10.0f;
+    PlayerStat _stat;
 
     [SerializeField]
     float _rotateSpeed = 0.1f;
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
+        _stat = gameObject.GetComponent<PlayerStat>();
 
         Managers.Input.MouseAction -= OnMouseClicked;
         Managers.Input.MouseAction += OnMouseClicked;
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             NavMeshAgent nma = gameObject.GetOrAddComponent<NavMeshAgent>();
-            float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
+            float moveDist = Mathf.Clamp(_stat.MoveSpeed * Time.deltaTime, 0, dir.magnitude);
             // nma.CalculatePath();
             nma.Move(dir.normalized * moveDist);
 
@@ -92,6 +93,8 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    int _mouseLayerMask = (1 << (int)Define.LayerMask.Ground | 1 << (int)Define.LayerMask.Monster);
+
     void OnMouseClicked(Define.MouseEvent evt)
     {
         //if (evt != Define.MouseEvent.Click)
@@ -103,10 +106,19 @@ public class PlayerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         // Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000.0f, Color.red, 0.3f);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, LayerMask.GetMask("Floor")))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, _mouseLayerMask))
         {
             _destPos = hit.point;
             _state = PlayerState.Moving;
+
+            if (hit.collider.gameObject.layer == (int)Define.LayerMask.Monster)
+            {
+                Debug.Log("Monster Click");
+            }
+            else
+            {
+                Debug.Log("Ground Click");
+            }
         }
     }
 }
