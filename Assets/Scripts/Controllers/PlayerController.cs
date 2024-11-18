@@ -142,7 +142,15 @@ public class PlayerController : MonoBehaviour
 
     void OnHitEvent()
     {
-        Debug.Log("OnHitEvent");
+        if (_lockTarget != null)
+        {
+            // 임시방편. 제대로 하려면 맞는 쪽에서 자신의 HP를 깎아야 한다.
+            StatBase targetStat = _lockTarget.GetComponent<StatBase>();
+            StatBase myStat = gameObject.GetComponent<StatBase>();
+            int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
+            Debug.Log($"Hit! dagage: {damage}");
+            targetStat.Hp -= damage;
+        }
 
         if (_stopSkill)
         {
