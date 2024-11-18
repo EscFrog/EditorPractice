@@ -13,17 +13,12 @@ public class UI_Inven_Item : UI_Base
 
     string _name;
 
-    void Start()
-    {
-        Init();
-    }
-
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
-        Get<GameObject>((int)GameObjects.ItemNameText).GetComponent<Text>().text = _name;
+        GetUI<GameObject>((int)GameObjects.ItemNameText).GetComponent<Text>().text = _name;
 
-        Get<GameObject>((int)GameObjects.ItemIcon)
+        GetUI<GameObject>((int)GameObjects.ItemIcon)
             .BindEvent(
                 (PointerEventData) =>
                 {

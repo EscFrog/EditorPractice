@@ -29,11 +29,6 @@ public class UI_Button : UI_Popup
         ItemIcon,
     }
 
-    private void Start()
-    {
-        Init();
-    }
-
     public override void Init()
     {
         base.Init();
@@ -43,9 +38,9 @@ public class UI_Button : UI_Popup
         Bind<GameObject>(typeof(GameObjects));
         Bind<Image>(typeof(Images));
 
-        GetButton((int)Buttons.PointButton).gameObject.BindEvent(OnButtonClicked);
+        GetUIButton((int)Buttons.PointButton).gameObject.BindEvent(OnButtonClicked);
 
-        GameObject go = GetImage((int)Images.ItemIcon).gameObject;
+        GameObject go = GetUIImage((int)Images.ItemIcon).gameObject;
         BindEvent(
             go,
             (PointerEventData data) =>
@@ -61,6 +56,6 @@ public class UI_Button : UI_Popup
     public void OnButtonClicked(PointerEventData data)
     {
         _score++;
-        GetText((int)Texts.ScoreText).text = $"점수 : {_score}";
+        GetUIText((int)Texts.ScoreText).text = $"점수 : {_score}";
     }
 }

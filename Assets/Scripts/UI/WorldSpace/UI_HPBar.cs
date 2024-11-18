@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_HPBar : UI_Base
 {
@@ -9,26 +11,32 @@ public class UI_HPBar : UI_Base
         HPBar
     }
 
+    StatBase _stat;
+
     private Transform _parent;
     private Vector3 _posOffset;
-    private float _yOffset = 0.5f;
+    public float _yOffset = 0.5f;
 
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
-    }
+        _stat = transform.parent.GetComponent<StatBase>();
 
-    public void Start()
-    {
         _parent = transform.parent;
-        Debug.Log(_parent);
-        _posOffset =
-            Vector3.up * (_parent.GetComponent<Collider>().bounds.size.y)
-            + new Vector3(0.0f, _yOffset, 0.0f);
+        _posOffset = Vector3.up * (_parent.GetComponent<Collider>().bounds.size.y + _yOffset);
     }
 
     public void Update()
     {
         transform.position = _parent.position + _posOffset;
+        transform.rotation = Camera.main.transform.rotation;
+
+        float ratio = (float)_stat.Hp / (float)_stat.MaxHP;
+        SetHpRatio(ratio);
+    }
+
+    public void SetHpRatio(float ratio)
+    {
+        GetUIObject((int)GameObjects.HPBar).GetComponent<Slider>().value = ratio;
     }
 }

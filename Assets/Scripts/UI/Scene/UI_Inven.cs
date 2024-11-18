@@ -9,18 +9,13 @@ public class UI_Inven : UI_Scene
         GridPanel
     }
 
-    void Start()
-    {
-        Init();
-    }
-
     public override void Init()
     {
         base.Init();
 
         Bind<GameObject>(typeof(GameObjects));
 
-        GameObject gridPanel = Get<GameObject>((int)GameObjects.GridPanel);
+        GameObject gridPanel = GetUI<GameObject>((int)GameObjects.GridPanel);
         foreach (Transform child in gridPanel.transform)
             Managers.Resource.Destroy(child.gameObject);
 
