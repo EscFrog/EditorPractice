@@ -47,8 +47,8 @@ public class PlayerController : MonoBehaviour
         _anim = GetComponent<Animator>();
         _stat = gameObject.GetComponent<PlayerStat>();
 
-        Managers.Input.MouseAction -= OnMouseClicked;
-        Managers.Input.MouseAction += OnMouseClicked;
+        Managers.Input.MouseAction -= OnMouseEvent;
+        Managers.Input.MouseAction += OnMouseEvent;
     }
 
     void Update()
@@ -71,6 +71,9 @@ public class PlayerController : MonoBehaviour
 
     void UpdateMouseCursor()
     {
+        if (Input.GetMouseButton(0))
+            return;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, _mouseReactLayer))
@@ -141,30 +144,45 @@ public class PlayerController : MonoBehaviour
 
     int _mouseReactLayer = (1 << (int)Define.LayerMask.Ground | 1 << (int)Define.LayerMask.Monster);
 
-    void OnMouseClicked(Define.MouseEvent evt)
-    {
-        //if (evt != Define.MouseEvent.Click)
-        //    return;
+    GameObject _lockTargat;
 
+    void OnMouseEvent(Define.MouseEvent evt)
+    {
         if (_state == PlayerState.Die)
             return;
 
+        RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        bool raycastHit = Physics.Raycast(ray, out hit, 1000.0f, _mouseReactLayer);
         // Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000.0f, Color.red, 0.3f);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, _mouseReactLayer))
+        switch (evt)
         {
-            _destPos = hit.point;
-            _state = PlayerState.Moving;
+            case Define.MouseEvent.PointerDown:
+                {
+                    if (raycastHit)
+                    {
+                        _destPos = hit.point;
+                        _state = PlayerState.Moving;
 
-            if (hit.collider.gameObject.layer == (int)Define.LayerMask.Monster)
-            {
-                Debug.Log("Monster Click");
-            }
-            else
-            {
-                Debug.Log("Ground Click");
-            }
+                        if (hit.collider.gameObject.layer == (int)Define.LayerMask.Monster)
+                            _lockTargat = hit.collider.gameObject;
+                        else
+                            _lockTargat = null;
+                    }
+                }
+                break;
+            case Define.MouseEvent.Press:
+                {
+                    if (_lockTargat != null)
+                        _destPos = _lockTargat.transform.position;
+                    else if (raycastHit)
+                        _destPos = hit.point;
+                }
+                break;
+            case Define.MouseEvent.PointerUp:
+                _lockTargat = null;
+                break;
         }
     }
 }
