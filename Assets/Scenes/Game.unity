@@ -8243,6 +8243,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 57b1c6e5e6fd80c4f8ee1d5ccba246c8, type: 3}
   m_PrefabInstance: {fileID: 1223650153}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &1229061631 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4830341918975291763, guid: 3016d5035f9520a47847b61d251a90a0, type: 3}
+  m_PrefabInstance: {fileID: 354849067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1234161409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15045,9 +15050,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 697125281987158669, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1229061631}
     - target: {fileID: 1613338836282310634, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
       propertyPath: m_Name
       value: DogPBR
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468127667034759567, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468127667034759567, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9107167138614806852, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15059,7 +15076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9107167138614806852, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.52
+      value: -18.36
       objectReference: {fileID: 0}
     - target: {fileID: 9107167138614806852, guid: edb568ea6caad409caf0e21cb47efba9, type: 3}
       propertyPath: m_LocalRotation.w
