@@ -45,7 +45,7 @@ public abstract class BaseController : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
-    protected virtual void Update()
+    public virtual void Update()
     {
         switch (State)
         {
