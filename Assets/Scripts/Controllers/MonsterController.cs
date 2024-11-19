@@ -94,16 +94,33 @@ public class MonsterController : BaseController
 
     protected override void UpdateSkill()
     {
-        Debug.Log("Monster UpdateSkill");
-    }
-
-    protected override void UpdateDie()
-    {
-        Debug.Log("Monster UpdateDie");
+        if (_lockTarget != null)
+        {
+            Vector3 dir = _lockTarget.transform.position - transform.position;
+            Quaternion quat = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, quat, _rotateSpeed);
+        }
     }
 
     void OnHitEvent()
     {
-        Debug.Log("Monster OnHitEvent");
+        if (_lockTarget != null)
+            State = Define.State.Idle;
+
+        // 체력
+        // 임시방편. 제대로 하려면 맞는 쪽에서 자신의 HP를 깎아야 한다.
+        StatBase targetStat = _lockTarget.GetComponent<StatBase>();
+        StatBase myStat = gameObject.GetComponent<StatBase>();
+        int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
+        targetStat.Hp -= damage;
+
+        if (targetStat.Hp <= 0)
+            State = Define.State.Idle;
+
+        float distance = (_lockTarget.transform.position - transform.position).magnitude;
+        if (distance <= _attackRange)
+            State = Define.State.Skill;
+        else
+            State = Define.State.Moving;
     }
 }

@@ -85,7 +85,6 @@ public class PlayerController : BaseController
             StatBase targetStat = _lockTarget.GetComponent<StatBase>();
             StatBase myStat = gameObject.GetComponent<StatBase>();
             int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
-            Debug.Log($"Hit! dagage: {damage}");
             targetStat.Hp -= damage;
         }
 
