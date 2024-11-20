@@ -7,17 +7,18 @@ namespace Data
 {
     #region Stat
 
-    public interface ILoader<key, Value>
-    {
-        Dictionary<key, Value> MakeDict();
-    }
-
     [Serializable]
     public class Stat
     {
         public int level;
-        public int HP;
+        public int maxHp;
         public int attack;
+        public int totalExp;
+    }
+
+    public interface ILoader<key, Value>
+    {
+        Dictionary<key, Value> MakeDict();
     }
 
     [Serializable]

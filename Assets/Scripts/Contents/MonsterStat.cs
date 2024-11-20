@@ -14,4 +14,15 @@ public class MonsterStat : StatBase
         _defence = 1;
         _moveSpeed = 5.0f;
     }
+
+    protected override void OnDead(StatBase attacker)
+    {
+        PlayerStat playerStat = attacker as PlayerStat;
+        if (playerStat != null)
+        {
+            playerStat.Exp += 15;
+        }
+
+        base.OnDead(attacker);
+    }
 }

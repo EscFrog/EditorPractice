@@ -66,11 +66,11 @@ public class StatBase : MonoBehaviour
         if (Hp <= 0)
         {
             Hp = 0;
-            OnDead();
+            OnDead(attacker);
         }
     }
 
-    protected virtual void OnDead()
+    protected virtual void OnDead(StatBase attacker)
     {
         Managers.Game.Despawn(gameObject);
     }

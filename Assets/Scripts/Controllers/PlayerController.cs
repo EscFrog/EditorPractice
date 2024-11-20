@@ -14,7 +14,7 @@ public class PlayerController : BaseController
 
     public override void Init()
     {
-        WorldObjectType = Define.WorldObject.Player;
+        PawnType = Define.PawnType.Player;
 
         _stat = gameObject.GetComponent<PlayerStat>();
 

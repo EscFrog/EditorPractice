@@ -26,7 +26,7 @@ public class MonsterController : BaseController
 
     public override void Init()
     {
-        WorldObjectType = Define.WorldObject.Monster;
+        PawnType = Define.PawnType.Monster;
 
         _stat = gameObject.GetComponent<MonsterStat>();
 

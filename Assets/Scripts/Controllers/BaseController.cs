@@ -14,7 +14,7 @@ public abstract class BaseController : MonoBehaviour
     [SerializeField]
     protected Define.State _state = Define.State.Idle;
 
-    public Define.WorldObject WorldObjectType { get; protected set; } = Define.WorldObject.Unknown;
+    public Define.PawnType PawnType { get; protected set; } = Define.PawnType.Unknown;
 
     protected Animator _anim;
 

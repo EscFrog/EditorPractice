@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Define
 {
-    public enum WorldObject
+    public enum PawnType
     {
         Unknown,
         Player,

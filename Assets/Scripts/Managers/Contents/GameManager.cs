@@ -12,16 +12,16 @@ public class GameManager
         return _player;
     }
 
-    public GameObject Spawn(Define.WorldObject type, string path, Transform parent = null)
+    public GameObject Spawn(Define.PawnType type, string path, Transform parent = null)
     {
         GameObject go = Managers.Resource.Instantiate(path, parent);
 
         switch (type)
         {
-            case Define.WorldObject.Monster:
+            case Define.PawnType.Monster:
                 _monsters.Add(go);
                 break;
-            case Define.WorldObject.Player:
+            case Define.PawnType.Player:
                 _player = go;
                 break;
         }
@@ -29,28 +29,28 @@ public class GameManager
         return go;
     }
 
-    public Define.WorldObject GetWorldObjectType(GameObject go)
+    public Define.PawnType GetPawnType(GameObject go)
     {
         BaseController bc = go.GetComponent<BaseController>();
         if (bc == null)
-            return Define.WorldObject.Unknown;
+            return Define.PawnType.Unknown;
 
-        return bc.WorldObjectType;
+        return bc.PawnType;
     }
 
     public void Despawn(GameObject go)
     {
-        Define.WorldObject type = GetWorldObjectType(go);
+        Define.PawnType type = GetPawnType(go);
 
         switch (type)
         {
-            case Define.WorldObject.Monster:
+            case Define.PawnType.Monster:
                 {
                     if (_monsters.Contains(go))
                         _monsters.Remove(go);
                 }
                 break;
-            case Define.WorldObject.Player:
+            case Define.PawnType.Player:
                 {
                     if (_player == go)
                         _player = null;
