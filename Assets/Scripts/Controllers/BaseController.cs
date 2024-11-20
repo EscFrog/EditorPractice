@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class BaseController : MonoBehaviour
@@ -13,6 +14,8 @@ public abstract class BaseController : MonoBehaviour
     [SerializeField]
     protected Define.State _state = Define.State.Idle;
 
+    public Define.WorldObject WorldObjectType { get; protected set; } = Define.WorldObject.Unknown;
+
     protected Animator _anim;
 
     public virtual Define.State State
@@ -22,6 +25,8 @@ public abstract class BaseController : MonoBehaviour
         {
             _state = value;
 
+            if (!gameObject.IsValid())
+                return;
             switch (_state)
             {
                 case Define.State.Die:

@@ -26,6 +26,8 @@ public class MonsterController : BaseController
 
     public override void Init()
     {
+        WorldObjectType = Define.WorldObject.Monster;
+
         _stat = gameObject.GetComponent<MonsterStat>();
 
         if (gameObject.GetComponentInChildren<UI_HPBar>() == null)
@@ -39,7 +41,7 @@ public class MonsterController : BaseController
 
     protected override void UpdateIdle()
     {
-        if (_player == null)
+        if (!_player.IsValid())
             return;
 
         float distance = (_player.transform.position - transform.position).magnitude;
@@ -53,8 +55,11 @@ public class MonsterController : BaseController
 
     protected override void UpdateMoving()
     {
-        if (_lockTarget == null)
+        if (!_lockTarget.IsValid())
+        {
+            State = Define.State.Idle;
             return;
+        }
 
         _destPos = _lockTarget.transform.position;
         Vector3 dir = _destPos - transform.position;
@@ -75,6 +80,8 @@ public class MonsterController : BaseController
         if (distance <= _attackRange)
         {
             _chaseTime = 0;
+            nma.ResetPath();
+            nma.speed = 0;
             State = Define.State.Skill;
             return;
         }
@@ -94,18 +101,23 @@ public class MonsterController : BaseController
 
     protected override void UpdateSkill()
     {
-        if (_lockTarget != null)
+        if (!_lockTarget.IsValid())
         {
-            Vector3 dir = _lockTarget.transform.position - transform.position;
-            Quaternion quat = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, quat, _rotateSpeed);
+            State = Define.State.Idle;
+            return;
         }
+
+        Vector3 dir = _lockTarget.transform.position - transform.position;
+        Quaternion quat = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, quat, _rotateSpeed);
     }
 
     void OnHitEvent()
     {
-        if (_lockTarget != null)
-            State = Define.State.Idle;
+        if (!_lockTarget.IsValid())
+        {
+            return;
+        }
 
         // 체력
         // 임시방편. 제대로 하려면 맞는 쪽에서 자신의 HP를 깎아야 한다.
@@ -115,7 +127,10 @@ public class MonsterController : BaseController
         targetStat.Hp -= damage;
 
         if (targetStat.Hp <= 0)
+        {
+            Managers.Game.Despawn(_lockTarget);
             State = Define.State.Idle;
+        }
 
         float distance = (_lockTarget.transform.position - transform.position).magnitude;
         if (distance <= _attackRange)
