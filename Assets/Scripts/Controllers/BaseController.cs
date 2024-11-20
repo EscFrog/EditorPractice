@@ -27,6 +27,7 @@ public abstract class BaseController : MonoBehaviour
 
             if (!gameObject.IsValid())
                 return;
+
             switch (_state)
             {
                 case Define.State.Die:
