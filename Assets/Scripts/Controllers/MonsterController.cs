@@ -34,7 +34,7 @@ public class MonsterController : BaseController
             Managers.UI.MakeWorldSpaceUI<UI_HPBar>(transform);
 
         // TODO: 매니저가 생기면 옮기자
-        _player = GameObject.FindGameObjectWithTag("Player");
+        _player = Managers.Game.GetPlayer();
 
         nma = gameObject.GetOrAddComponent<NavMeshAgent>();
     }
@@ -119,18 +119,8 @@ public class MonsterController : BaseController
             return;
         }
 
-        // 체력
-        // 임시방편. 제대로 하려면 맞는 쪽에서 자신의 HP를 깎아야 한다.
         StatBase targetStat = _lockTarget.GetComponent<StatBase>();
-        StatBase myStat = gameObject.GetComponent<StatBase>();
-        int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
-        targetStat.Hp -= damage;
-
-        if (targetStat.Hp <= 0)
-        {
-            Managers.Game.Despawn(_lockTarget);
-            State = Define.State.Idle;
-        }
+        targetStat.OnAttacked(_stat);
 
         float distance = (_lockTarget.transform.position - transform.position).magnitude;
         if (distance <= _attackRange)

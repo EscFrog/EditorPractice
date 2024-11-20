@@ -70,12 +70,15 @@ public class PlayerController : BaseController
 
     protected override void UpdateSkill()
     {
-        if (_lockTarget.IsValid())
+        if (!_lockTarget.IsValid())
         {
-            Vector3 dir = _lockTarget.transform.position - transform.position;
-            Quaternion quat = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, quat, _rotateSpeed);
+            State = Define.State.Moving;
+            return;
         }
+
+        Vector3 dir = _lockTarget.transform.position - transform.position;
+        Quaternion quat = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, quat, _rotateSpeed);
     }
     #endregion
 
@@ -83,18 +86,8 @@ public class PlayerController : BaseController
     {
         if (_lockTarget.IsValid())
         {
-            // 임시방편. 제대로 하려면 맞는 쪽에서 자신의 HP를 깎아야 한다.
             StatBase targetStat = _lockTarget.GetComponent<StatBase>();
-            StatBase myStat = gameObject.GetComponent<StatBase>();
-            int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
-            targetStat.Hp -= damage;
-
-            if (targetStat.Hp <= 0)
-            {
-                Managers.Game.Despawn(_lockTarget);
-                State = Define.State.Moving;
-                return;
-            }
+            targetStat.OnAttacked(_stat);
         }
 
         if (_stopSkill)

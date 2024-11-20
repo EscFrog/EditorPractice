@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class StatBase : MonoBehaviour
@@ -56,5 +57,21 @@ public class StatBase : MonoBehaviour
     {
         get { return _moveSpeed; }
         set { _moveSpeed = value; }
+    }
+
+    public virtual void OnAttacked(StatBase attacker)
+    {
+        int damage = Mathf.Max(0, attacker.Attack - Defence);
+        Hp -= damage;
+        if (Hp <= 0)
+        {
+            Hp = 0;
+            OnDead();
+        }
+    }
+
+    protected virtual void OnDead()
+    {
+        Managers.Game.Despawn(gameObject);
     }
 }
