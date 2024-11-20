@@ -29,7 +29,7 @@ public class PlayerController : BaseController
     protected override void UpdateMoving()
     {
         // 록타겟이 내 사정거리보다 가까우면 공격
-        if (_lockTarget != null)
+        if (_lockTarget.IsValid())
         {
             float distance = (_destPos - transform.position).magnitude;
             if (distance <= 1)
@@ -70,7 +70,7 @@ public class PlayerController : BaseController
 
     protected override void UpdateSkill()
     {
-        if (_lockTarget != null)
+        if (_lockTarget.IsValid())
         {
             Vector3 dir = _lockTarget.transform.position - transform.position;
             Quaternion quat = Quaternion.LookRotation(dir);
@@ -81,13 +81,20 @@ public class PlayerController : BaseController
 
     void OnHitEvent()
     {
-        if (_lockTarget != null)
+        if (_lockTarget.IsValid())
         {
             // 임시방편. 제대로 하려면 맞는 쪽에서 자신의 HP를 깎아야 한다.
             StatBase targetStat = _lockTarget.GetComponent<StatBase>();
             StatBase myStat = gameObject.GetComponent<StatBase>();
             int damage = Mathf.Max(0, myStat.Attack - targetStat.Defence);
             targetStat.Hp -= damage;
+
+            if (targetStat.Hp <= 0)
+            {
+                Managers.Game.Despawn(_lockTarget);
+                State = Define.State.Moving;
+                return;
+            }
         }
 
         if (_stopSkill)
