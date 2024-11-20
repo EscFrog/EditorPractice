@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class GameManager
 {
     GameObject _player;
     HashSet<GameObject> _monsters = new HashSet<GameObject>();
+
+    public Action<int> OnSpawnEvent;
 
     public GameObject GetPlayer()
     {
@@ -20,6 +23,8 @@ public class GameManager
         {
             case Define.PawnType.Monster:
                 _monsters.Add(go);
+                if (OnSpawnEvent != null)
+                    OnSpawnEvent.Invoke(1);
                 break;
             case Define.PawnType.Player:
                 _player = go;
@@ -47,7 +52,11 @@ public class GameManager
             case Define.PawnType.Monster:
                 {
                     if (_monsters.Contains(go))
+                    {
                         _monsters.Remove(go);
+                        if (OnSpawnEvent != null)
+                            OnSpawnEvent.Invoke(-1);
+                    }
                 }
                 break;
             case Define.PawnType.Player:

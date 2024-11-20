@@ -9,13 +9,18 @@ public class GameScene : BaseScene
         base.Init();
 
         SceneType = Define.Scene.Game;
-        Managers.UI.ShowSceneUI<UI_Inven>();
+        // Managers.UI.ShowSceneUI<UI_Inven>();
         Dictionary<int, Data.Stat> dict = Managers.Data.StatDict;
         gameObject.GetOrAddComponent<CursorController>();
 
         GameObject player = Managers.Game.Spawn(Define.PawnType.Player, "UnityChan");
         Camera.main.gameObject.GetOrAddComponent<CameraController>().SetPlayer(player);
-        Managers.Game.Spawn(Define.PawnType.Monster, "DogPBR");
+
+        // GameObject obj = Managers.Game.Spawn(Define.PawnType.Monster, "DogPBR");
+        GameObject go = new GameObject { name = "SpawningPool" };
+        SpawningPool pool = go.GetOrAddComponent<SpawningPool>();
+        go.transform.position = new Vector3(0.0f, 0.0f, -5.0f);
+        pool.SetKeepMonsterCount(3);
     }
 
     public override void Clear()
