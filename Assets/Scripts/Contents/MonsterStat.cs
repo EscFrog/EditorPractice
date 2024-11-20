@@ -10,8 +10,8 @@ public class MonsterStat : StatBase
         _level = 1;
         _hp = 100;
         _maxHP = 100;
-        _attack = 10;
-        _defence = 5;
+        _attack = 8;
+        _defence = 1;
         _moveSpeed = 5.0f;
     }
 }
